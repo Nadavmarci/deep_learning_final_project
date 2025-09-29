@@ -28,3 +28,6 @@ Model inputs:
 - Best setting: batch 20, lr 3e-4, MSE loss, ~50 epochs.
 - Predicted metasurface patterns match ground truth with high fidelity.
 - Additional qualitative examples and training curves are provided in the report.
+---
+
+## Repository Structure
