@@ -1,50 +1,33 @@
-# Data Science Certificate Program – Bar-Ilan University  
-## Product Demand Prediction for Inventory Management in an Indian Restaurant
+# Predicting Metasurface Patterns from Light Scattering with Diffusion Models
 
-### Overview
-This project analyzes online order data from a single Indian restaurant in order to identify which product combinations (frequent baskets of items) are most common and to predict ordering patterns for the following three days.  
-Using **Apriori algorithms for frequent itemset mining**, feature engineering, and machine learning models (Logistic Regression, Random Forest, Gradient Boosting, AdaBoost), the goal is to support **inventory management decisions** by anticipating short-term demand.
+## Overview
+Final project in the Deep Learning M.Sc. course (Tel Aviv University).  
+We build a class-conditioned diffusion model (UNet, Hugging Face Diffusers) that predicts the optimal metasurface pattern given its measured light-scattering behavior.
 
----
+Dataset: 25,000 samples of metasurfaces and their light responses (Nano-Photonics Lab, TAU).  
+Best configuration after experiments: 50 epochs, batch size 20, learning rate 3e-4, MSE loss.  
+Results (test): accuracy 98.6%, precision 0.995, recall 0.995.
 
-### Data
-- Online orders: product-level transactions collected from the restaurant’s ordering system  
-- Product prices: used to evaluate basket composition and revenue impact  
-- Calendar data: weekdays, months, holidays  
-- Weather data: daily min/avg/max temperatures for contextual features  
+## Data
+Each sample includes:
+- Pattern: binary 10×10 grid (padded to 32×32, 1 channel).
+- Light matrices: transmission (Tm) and reflection (Rm), each 23×23 (padded/normalized to 32×32).
+- Height (h): included as an additional channel.
 
-**Model inputs:**  
-- Cleaned and merged flat table including order features, weather, and calendar variables  
-- Engineered features such as lags, ratios, and dummy variables  
+Model inputs:
+- Condition: 32×32×3 light “image” (Rm, Tm, h×pattern).
+- Target: 32×32×1 pattern image.
 
----
+## Method
+- Class-conditioned diffusion model with a 2D UNet backbone.
+- Trained to denoise from y_t to y_0 while conditioned on the light matrix.
+- Compared losses (MSE, L1, Huber) and batch sizes (16, 20, 24, 32).
+- Addressed failure modes: overfitting (loss choice), high learning rate spikes, normalization issues.
 
-### Method
-- Built a unified **flat table** with SQL to merge and organize inputs  
-- **Exploratory Data Analysis (EDA):** examined distributions and correlations, handled missing values/outliers, removed irrelevant or duplicate records, and used R to test correlations and significance across features  
-- **Feature engineering** to derive meaningful predictors  
-- Model development and comparison: Logistic Regression, Random Forest, Gradient Boosting, AdaBoost  
-- **Hyperparameter tuning** via Grid Search  
-- Evaluation with AUC, Accuracy, Precision, Recall  
-
----
-
-### Results
-- **Best performing model:** AdaBoost  
-- **Test performance:** AUC ≈ 0.80, balanced performance across metrics  
-- Frequent product combinations successfully identified using Apriori, supporting classification features  
-- EDA revealed strong correlations between weather, calendar effects, and ordering behavior  
-- Qualitative examples and detailed tables are provided in the PDF report  
-
----
-
-### Colab Notebooks
-
-- EDA  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fvY5YNuII9T_nDxHjLGI6E5fYGfH1_q6?usp=drive_link)
-
-- Machine Learning / Modeling  
-  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Jn4RslbPRjwbHYOh8lDNys5ooPSCYYBu?usp=drive_link)
+## Results
+- Best setting: batch 20, lr 3e-4, MSE loss, ~50 epochs.
+- Predicted metasurface patterns match ground truth with high fidelity.
+- Additional qualitative examples and training curves are provided in the report.
 
 ---
 
