@@ -38,4 +38,14 @@ Using **Apriori algorithms for frequent itemset mining**, feature engineering, a
 
 ---
 
+### Colab Notebooks
+
+- EDA  
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fvY5YNuII9T_nDxHjLGI6E5fYGfH1_q6?usp=drive_link)
+
+- Machine Learning / Modeling  
+  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Jn4RslbPRjwbHYOh8lDNys5ooPSCYYBu?usp=drive_link)
+
+---
+
 ### Repository Structure
